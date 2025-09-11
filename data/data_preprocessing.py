@@ -82,7 +82,7 @@ def smooth_sequence(seq, method="sg", window_length=5, polyorder=2):
 
 
 def process_class(input_dir, output_path, class_name,
-                  seq_len=30, step=10, augment=False, smooth="none"):
+                  seq_len=30, step=5, augment=False, smooth="none"):
     """Processing for given class type"""
     if class_name not in CLASS_MAPPING:
         raise ValueError(f"Unknown class_name '{class_name}'. Must be one of {list(CLASS_MAPPING.keys())}")
@@ -126,7 +126,7 @@ if __name__ == "__main__":
                         help="Class type (label)")
     parser.add_argument("--seq_len", type=int, default=30,
                         help="Sequence window length")
-    parser.add_argument("--step", type=int, default=10,
+    parser.add_argument("--step", type=int, default=5,
                         help="Step of window sliding")
     parser.add_argument("--augment", action="store_true",
                         help="Enable data augmentation?")

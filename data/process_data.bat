@@ -10,6 +10,6 @@ python data_preprocessing.py ^
     --output_path processed/%activity%.npz ^
     --class_name %activity% ^
     --smooth sg ^
-    --seq_len 15
+    --seq_len 30
 
 pause

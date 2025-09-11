@@ -1,22 +1,14 @@
 # Classes encoding
 CLASS_MAPPING = {
     "bowing" : 0,
-    "cleaning" : 1,
-    "collecting" : 2,
-    "drinking" : 3,
-    "eating" : 4,
-    "looking" : 5,
-    "opening" : 6,
-    "passing" : 7,
-    "picking" : 8,
-    "placing" : 9,
-    "pushing" : 10,
-    "reading" : 11,
-    "sitting" : 12,
-    "standing" : 13,
-    "standing_up" : 14,
-    "talking" : 15,
-    "turning" : 16,
-    "turning_front" : 17,
-    "walking" : 18
+    "crawling" : 1,
+    "drinking" : 2,
+    "laying" : 3,
+    "opening" : 4,
+    "picking" : 5,
+    "sitting" : 6,
+    "standing" : 7,
+    "turning" : 8,
+    "walking_forward" : 9,
+    "walking_backward" : 10
 }

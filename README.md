@@ -1,6 +1,6 @@
-# GRU-Pose-Classifier 
+# ML Human Activity Recognition 
 
-RNN **GRU** model for recognizing human activities.
+Models for recognizing human activities.
 
 ---
 ## Overview

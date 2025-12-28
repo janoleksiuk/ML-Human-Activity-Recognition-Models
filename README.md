@@ -21,7 +21,7 @@ This project contains the implementation of 9 ML models designed for **predictin
 - Input data: 34-point body joint positions captured frame by frame (read more about it [here](https://www.stereolabs.com/docs/body-tracking)).
 - Output: predicted human activity classes or movement patterns.
 - Testing dataset including 6 activity classes (11 and 4 class datasets in available in commit history).
-- Implemenation of another ML models as classes in `models.py' and compatible data loading functions in 'datasets.py'
+- Implemenation of another ML models as classes in `models.py` and compatible data loading functions in `datasets.py`
 ---
 
 ## Usage

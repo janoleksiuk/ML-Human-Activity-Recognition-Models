@@ -5,13 +5,23 @@ Models for recognizing human activities.
 ---
 ## Overview
 
-This project contains the implementation of a **GRU recurrent neural network** designed for **predicting recorded human activity** based on motion capture using a ZED camera, which provides a 34-point human body model.
+This project contains the implementation of 9 ML models designed for **predicting recorded human activity** based on motion capture using a ZED camera, which provides a 34-point human body model. These includes:
+- RNN-GRU (default model utilized by `predict.py` due to best performance)
+- RNN-LSTM
+- CNN
+- MLP
+- KNN
+- SVM
+- XGBoost
+- TabTransformer
+- SOM
 
 **Key Features:**
-- Uses GRU recurrent neural architectures for temporal sequence modeling.
+- Uses RNN-GRU neural architecture for temporal sequence modeling.
 - Input data: 34-point body joint positions captured frame by frame (read more about it [here](https://www.stereolabs.com/docs/body-tracking)).
 - Output: predicted human activity classes or movement patterns.
-- Testing dataset including 6 activity classes.
+- Testing dataset including 6 activity classes (11 and 4 class datasets in available in commit history).
+- Implemenation of another ML models as classes in `models.py' and compatible data loading functions in 'datasets.py'
 ---
 
 ## Usage

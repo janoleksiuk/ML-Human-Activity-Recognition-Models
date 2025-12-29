@@ -28,7 +28,7 @@ This project contains the implementation of 9 ML models designed for **predictin
 
 1. **Clone the repository:**
 ```bash
-git clone https://github.com/janoleskiuk/GRU-Pose-Classifier.git
+git clone git clone https://github.com/janoleksiuk/ML-Human-Activity-Recognition-Models.git
 cd GRU-Pose-Classifier
 ```
 

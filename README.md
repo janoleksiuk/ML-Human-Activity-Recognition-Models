@@ -6,7 +6,7 @@ Models for recognizing human activities.
 ## Overview
 
 This project contains the implementation of 9 ML models designed for **predicting recorded human activity** based on motion capture using a ZED camera, which provides a 34-point human body model. These includes:
-- RNN-GRU (default model utilized by `predict.py` due to best performance)
+- RNN-GRU (default model utilized by `predict.py` due to best performance, introduced also two-stream variant as default)
 - RNN-LSTM
 - CNN
 - MLP

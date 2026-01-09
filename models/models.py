@@ -53,6 +53,7 @@ except Exception:  # pragma: no cover
 # PyTorch models
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 
 # =============================================================================
@@ -87,6 +88,76 @@ def _ensure_rnn_3d(x: torch.Tensor) -> torch.Tensor:
 # =============================================================================
 # PyTorch models
 # =============================================================================
+
+class TwoStreamPoseGRU(nn.Module):
+    """
+    Two-stream GRU classifier:
+      - GRU on joint positions
+      - GRU on joint velocities
+      - Late fusion of both
+      - Dynamic joint dropout (only during training)
+    Expected input: (B, T, F) or (B, F) (treated as T=1)
+    Output: logits (B, num_classes)
+    """
+    def __init__(
+        self,
+        input_dim: int,
+        num_classes: int,
+        hidden_dim: int = 128,
+        num_layers: int = 2,
+        dropout: float = 0.2,
+        bidirectional: bool = False,
+        velocity_dropout: float = 0.05,
+    ):
+        super().__init__()
+
+        self.velocity_dropout = velocity_dropout
+        out_dim = hidden_dim * (2 if bidirectional else 1)
+
+        self.gru_pos = nn.GRU(
+            input_size=input_dim,
+            hidden_size=hidden_dim,
+            num_layers=num_layers,
+            batch_first=True,
+            dropout=dropout if num_layers > 1 else 0.0,
+            bidirectional=bidirectional,
+        )
+
+        self.gru_vel = nn.GRU(
+            input_size=input_dim,
+            hidden_size=hidden_dim,
+            num_layers=num_layers,
+            batch_first=True,
+            dropout=dropout if num_layers > 1 else 0.0,
+            bidirectional=bidirectional,
+        )
+
+        self.head = nn.Sequential(
+            nn.LayerNorm(out_dim * 2),
+            nn.Dropout(dropout),
+            nn.Linear(out_dim * 2, num_classes),
+        )
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x = _ensure_rnn_3d(x).float()  # (B, T, F)
+
+        if self.training and self.velocity_dropout > 0:
+            mask = (torch.rand_like(x) > self.velocity_dropout).float()
+            x = x * mask
+
+        # Compute velocity
+        x_vel = x[:, 1:, :] - x[:, :-1, :]             # (B, T-1, F)
+        x_vel = F.pad(x_vel, (0, 0, 1, 0))              # pad first frame to keep length
+
+        out_pos, _ = self.gru_pos(x)
+        out_vel, _ = self.gru_vel(x_vel)
+
+        last_pos = out_pos[:, -1, :]                    # (B, H*)
+        last_vel = out_vel[:, -1, :]                    # (B, H*)
+
+        combined = torch.cat([last_pos, last_vel], dim=1)
+        return self.head(combined)
+
 
 class PoseGRU(nn.Module):
     """
